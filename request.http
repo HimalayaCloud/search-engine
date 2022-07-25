@@ -1,0 +1,10 @@
+POST http://localhost:5000/api/posts
+Content-Type: application/json;
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmRkMTE5ZWJlZDBjNDhiZjc0MjAzODUiLCJpYXQiOjE2NTg2NTUxNTB9.8mthZ4fSpr8zybS0yzHkj1IQaF9qRLyzkyt_CDyz6Gc
+
+{
+    "title" : "my second post",
+    "description" : "abc",
+    "url" : "google.com",
+    "status" : "LEARNED"
+}
