@@ -5,16 +5,22 @@ const jwt = require("jsonwebtoken");
 const verifyToken = require("../middleware/auth");
 const User = require("../models/User");
 
-router.get("/", verifyToken , async (req, res) => {
+// @route Get api/auth
+// @desc check if user is authenticated
+// @access Public
+router.get("/", verifyToken, async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select('-password')
-    if(!user){
-      return res.status(400).json({success:false, message:'User not found'});
+    const user = await User.findById(req.userId).select("-password");
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found" });
     }
-    res.json({success:true, user});
+    // all good
+    res.json({ success: true, message: "User authenticated" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: "internal error" });
+    res.status(500).json({ success: false, message: " Internal Server Error" });
   }
 });
 
@@ -65,13 +71,15 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  if (!username || !password)
+  // simple validation
+  if (!username || !password) {
     return res
       .status(400)
       .json({ success: false, message: "Invalid username or password" });
+  }
 
   try {
-    // check fo existing user
+    // Check for existing user
     const user = await User.findOne({ username: username });
     if (!user) {
       return res
@@ -94,12 +102,12 @@ router.post("/login", async (req, res) => {
 
     res.json({
       success: true,
-      message: "Logged successfully",
+      message: "User login successfully",
       accessToken: accessToken,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: "internal error" });
+    res.status(500).json({ success: false, message: " Internal Server Error" });
   }
 });
 
